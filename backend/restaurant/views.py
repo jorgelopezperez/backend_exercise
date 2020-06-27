@@ -1,14 +1,13 @@
-from django.shortcuts import render
-from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.forms import formset_factory, inlineformset_factory
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
-from .models import NutritionalInfo, Product, NutritionalInfoValues
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect		
+from .models import NutritionalInfo, Product, NutritionalInfoValues
+from .forms import NutritionalInfoValuesForm, NutritionalInfoValuesFormFormSet, ProductForm, MyFormSimple
 
-from django.contrib.auth import views as auth_views
 
 # VIEWS for Nutritional Info
 @method_decorator([login_required], name='dispatch')
@@ -84,38 +83,6 @@ class ProductDeleteView(DeleteView):
 	template_name = 'restaurant/product/delete.html'
 	success_url = reverse_lazy('restaurant:product_list')
 
-from restaurant.forms import NutritionalInfoValuesForm, NutritionalInfoValuesFormFormSet, ProductForm, MyFormSimple
-
-formset2 = NutritionalInfoValuesFormFormSet(initial=[
-			{'nutritional_info': '1',
-			 'product': "2",
-			 "values": "200.00"}
-		])
-@method_decorator([login_required], name='dispatch')	
-class ProductCreateView(CreateView):
-	model = Product
-	template_name = 'restaurant/product/create.html'
-	fields = "__all__"
-	success_url = reverse_lazy('restaurant:product_list')
-	
-	def get(self, request, *args, **kwargs):
-		context = {'form': MyFormSimple(),
-				   #'form_set': NutritionalInfoValuesFormFormSet()
-				   }
-		return render(request, 'restaurant/product/create.html', context)
-		
-@method_decorator([login_required], name='dispatch')	
-class ProductCreateView2(CreateView):
-	model = Product
-	template_name = 'restaurant/product/create2.html'
-	fields = "__all__"
-	success_url = reverse_lazy('restaurant:product_list')
-	
-	def get(self, request, *args, **kwargs):
-		context = {'form': MyFormSimple(),
-				   #'form_set': NutritionalInfoValuesFormFormSet()
-				   }
-		return render(request, 'restaurant/product/create2.html', context)
 
 @login_required		
 def create_product(request):
@@ -145,9 +112,10 @@ def create_product(request):
 		return render(request, 'restaurant/product/create3.html', {'form': form, 'formset': form_set})
 		
 
-from django.shortcuts import render, get_object_or_404, redirect		
-	
-def post_update(request, pk=None):
+
+
+@login_required	
+def update_product(request, pk=None):
 	instance = get_object_or_404(Product, pk=pk)
 	print(instance)
 	data = {"nombre": instance.name, 
@@ -221,7 +189,6 @@ def post_update(request, pk=None):
 			TO_UPDATE = [{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in ASSOCIATED_DATA if el["values"] in TO_UPDATE_partial]
 			TO_UPDATE_BETTER = [{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in ASSOCIATED_DATA if el["values"] in TO_UPDATE_partial and el["nutritional_info"].name not in TO_INSERT_partial]
 			#import pdb; pdb.set_trace()
-			#TO_UPDATE_DATA_LIST = [el["nutritional_info"] for el in ASSOCIATED_DATA]
 			print([{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in ASSOCIATED_DATA if el["nutritional_info"].name in TO_INSERT_partial])
 			print([{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in OLD_NUTRITIONAL_INFO_LIST_DICTS if el["nutritional_info"].name in TO_DELETE_partial])
 			print([el for el in OLD_NUTRITIONAL_INFO_LIST_DICTS if el["nutritional_info"].name in TO_DELETE_partial])
@@ -230,26 +197,25 @@ def post_update(request, pk=None):
 			del DATA_DICT["nombre"]
 			
 			if TO_UPDATE_BETTER != []:	
-				print("paso por alla")
 				for el in ASSOCIATED_DATA:
 					to_update_nutr_instance = NutritionalInfoValues.objects.filter(product_id = instance.pk, nutritional_info__name = el["nutritional_info"].name).get()
 					to_update_nutr_instance.values = el["values"]
 					to_update_nutr_instance.save()
 					
 			if TO_DELETE_partial != [] and TO_INSERT_partial != []:	
-				print("paso por aqui")
 				for el in TO_DELETE_BETTER:
-					print("el")
+					print("el-delete")
 					print(el)
-					NutritionalInfoValues.objects.filter(product_id=instance.pk,  nutritional_info__name = el["nutritional_info"]).delete
-					#to_insert_nutr_instance = NutritionalInfoValues.objects.create(product_id = instance.pk, nutritional_info__name = el["nutritional_info"].name)
-					
+					import pdb; pdb.set_trace()
+					NutritionalInfoValues.objects.filter(product=instance,  nutritional_info__name = el["nutritional_info"]).delete
 				for el in TO_INSERT_BETTER:
 					print("el-insert")
 					print(el)
-					nutritional_instance = NutritionalInfo(name=el["nutritional_info"])
+					#import pdb; pdb.set_trace()
+					nutritional_instance = NutritionalInfo.objects.get(name=el["nutritional_info"])
 					print(nutritional_instance)
 					NutritionalInfoValues.objects.create(product=instance,  nutritional_info = nutritional_instance,values=el["values"])
+					#instance.nutritionalinfovalues_set.create
 				
 				
 			'''
