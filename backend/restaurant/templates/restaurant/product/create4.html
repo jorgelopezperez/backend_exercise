@@ -1,0 +1,24 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %}My NutritionalInfo list 1{% endblock %}
+
+{% block content %}
+<form method="post">{% csrf_token %}
+	<div class="wrap_out">
+    {{ form.as_p }}
+		
+		{% for form in formset %}
+			aaa
+			
+			{#{ form.as_p }#}
+			<div class="wrap_inline">
+			{% for field in form %}
+				{{field.label_tag}}
+				{{field}}
+			</div>				
+			{% endfor %}
+		{% endfor %}
+	</div>
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %}My NutritionalInfo list{% endblock %}
+
+{% block content %}
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object.name }} | {{ object.unit}}"?</p>
+    <input type="submit" value="Confirm">
+</form>
+{% endblock %}

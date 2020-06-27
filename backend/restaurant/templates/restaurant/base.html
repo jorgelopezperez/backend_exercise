@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static "css/base.css" %}" rel="stylesheet">
+  <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>-->
+ 
+  <!--<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function() {
+		var table = $('#example').DataTable();
+		// #myInput is a <input type="text"> element
+		$('.myInput').on( 'keyup', function () {
+			console.log("this")
+			console.log(this)
+			//table.columns( 3 ).search( this.value ).draw();
+			table.search( this.value ).draw();
+		} );
+		
+	} );
+	</script>-->
+</head>
+
+<div id="header">
+	<span class="logo">Backend </span>
+	<span class="items"> <a href="{% url 'restaurant:nutritional_info_list'%}">NUTRITIONAL INFO</a> </span>
+	<span class="items"> <a href="{% url 'restaurant:product_list'%}">PRODUCTS</a> </span>
+	<span class="username">Welcome {{ request.user.username }} | <a href="/logout">Log-out</a></span>
+</div>
+<body>
+  <div id="content">
+	{% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

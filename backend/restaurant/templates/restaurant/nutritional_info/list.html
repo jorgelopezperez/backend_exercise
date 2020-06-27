@@ -1,0 +1,27 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %}My NutritionalInfo list{% endblock %}
+
+{% block content %}
+  <a href="{% url 'restaurant:nutritional_info_create'%}"> Create </a>  
+  <h1>My Nutritional Info</h1>
+  <table class="backend">
+  <tr>
+    <th>Name</th>
+    <th>Unit</th>
+	<th>Action</th>
+  </tr>
+  {% for nutr in nutritional_infos %}
+  <tr>
+    <td>{{ nutr.name }}</td>
+    <td>{{nutr.unit}}</td>
+    <td>
+		<a href="{% url 'restaurant:nutritional_info_update' pk=nutr.pk %}"> Update </a> 
+		|
+		<a href="{% url 'restaurant:nutritional_info_delete' pk=nutr.pk %}"> Delete </a> 
+	</td>
+  </tr>
+  {% endfor %}
+  </table>
+ 
+{% endblock %}

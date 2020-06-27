@@ -1,0 +1,43 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %} Product 2{% endblock %}
+cdndkcnskc2
+
+{% block content %}
+  <a href="{% url 'restaurant:product_create'%}"> Create </a>  
+  <h1>Product</h1>
+  <table id="example">
+  <tr>
+    <th>Name</th>
+	<th>Nutritional values</th>
+	<th>Status</th>
+	<th>Actions</th>
+  </tr>
+  {% for prod in products %}
+  <tr>
+    <td>{{ prod.name }}</td>
+	<td>
+		<ul>
+		 {% for pr in prod.nutritionalinfovalues_set.all %} 	
+			<li>{{pr.nutritional_info.name}} ({{pr.nutritional_info.unit}}) : {{pr.values}}</li>
+		 {% endfor %}
+		</ul>
+	</td>
+	<td>{{ prod.status.upper}}</td>
+    <td>
+		<a href="{% url 'restaurant:product_update' pk=prod.pk %}"> Update </a> 
+		|
+		<a href="{% url 'restaurant:product_delete' pk=prod.pk %}"> Delete </a> 
+	</td>
+  </tr>
+  {% endfor %}
+  </table>
+ 
+{% endblock %}
+
+<table cellpadding="0" cellspacing="0" border="0" id="example">
+     <thead>
+         <tr><th>My Attr Heading</th></tr>
+     </thead>
+     <tbody></tbody>
+</table>
