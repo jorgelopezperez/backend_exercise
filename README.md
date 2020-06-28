@@ -50,9 +50,7 @@ Fields:
 *  Create the CRUD pages for the Products
 
   *  List the products
-
-    *  Inside the list you should display the name of the product, as well as the nutritional values of that product
-
+  *  Inside the list you should display the name of the product, as well as the nutritional values of that product
   *  Create the products
   *  Update the products
   *  Delete the products
