@@ -32,32 +32,32 @@ Fields:
 
 ## Requirements
 
-*   Create the database models (and their related models)
+*  Create the database models (and their related models)
 
-*   Users (you can use the default Django model)
-*   Nutritional information
-*   Products
+  * Users (you can use the default Django model)
+  * Nutritional information
+  * Products
 
-*   Create the login page for the users to authenticate inside the CMS
-*   The users should not be able to manage the CMS data if they are not authenticated
-*   Create the CRUD pages for the Nutritional Information
+*  Create the login page for the users to authenticate inside the CMS
+*  The users should not be able to manage the CMS data if they are not authenticated
+*  Create the CRUD pages for the Nutritional Information
 
-*   List the nutritional informations
-*   Create the nutritional informations
-*   Update the nutritional informations
-*   Delete the nutritional informations
+  *  List the nutritional informations 
+  *  Create the nutritional informations
+  *  Update the nutritional informations
+  *  Delete the nutritional informations
 
-*   Create the CRUD pages for the Products
+*  Create the CRUD pages for the Products
 
-*   List the products
+  *  List the products
 
-*   Inside the list you should display the name of the product, as well as the nutritional values of that product
+    *  Inside the list you should display the name of the product, as well as the nutritional values of that product
 
-*   Create the products
-*   Update the products
-*   Delete the products
+  *  Create the products
+  *  Update the products
+  *  Delete the products
 
-*   Allow the user to filter the products
+*  Allow the user to filter the products
 
-*   This can be added on the page for listing the products
-*   The user should be able to filter the products by their name, as well as their status ( ACTIVE / INACTIVE )
+  *  This can be added on the page for listing the products
+  *  The user should be able to filter the products by their name, as well as their status ( ACTIVE / INACTIVE )
