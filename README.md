@@ -3,7 +3,6 @@ Table of contents
 
    * [Description of the assigned task](#description-of-the-assigned-task)
    * [Usage](#usage)
-      * [Installation](installation)
 
 ## Description of the ssigned task   
    
@@ -73,6 +72,8 @@ Fields:
 
 This web application is relying on python packages and javascript libraries
 
+### Main dependencies
+
 Python packages:
 
 *  Django 3.0.7
@@ -97,7 +98,6 @@ Install the package dependencies by running this command:
 ```
 pip install -r requirements.txt
 ```
-
 
 Run you application by cd to the project directory and running these commands
 
