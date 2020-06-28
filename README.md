@@ -9,17 +9,17 @@ Table of contents
    
 As a matter of proof, in this web application you can see <b>CRUD</b> pages developed with Django framework
 
-## Task
+### Task
 
 You work for a restaurant chain, and your manager has asked you to create a small CMS for managing the information about their products.
 
-## Database models
+### Database models
 
-### Users
+#### Users
 
 These are the users that will be authenticating inside the CMS for managing the data.
 
-### Nutritional information
+#### Nutritional information
 
 This table will hold the nutritional values that will be used for the products.
 
@@ -28,7 +28,7 @@ Fields:
 *   Name
 *   Unit
 
-### Products
+#### Products
 
 This table will hold the products.
 
@@ -39,7 +39,7 @@ Fields:
 *   Nutritional values - each product can have multiple nutritional values (e.g. Proteins (g): 100.00 )
 *   Status - Either ACTIVE or INACTIVE
 
-## Requirements
+### Requirements
 
 *  Create the database models (and their related models)
 
@@ -70,3 +70,27 @@ Fields:
   *  The user should be able to filter the products by their name, as well as their status ( ACTIVE / INACTIVE )
   
 ## Usage 
+
+Follow these steps to run this application
+
+### Installation
+
+Download the source code from this git repo
+
+Install the package dependencias by running this command:
+
+```
+pip install -r requirements.txt
+```
+
+Python packages:
+
+Javascript libraries:
+
+Run you application by cd to the project directory and running this command
+
+```
+python manage.py runserver  
+```
+
+Point your browser to URL: http://127.0.0.1:8000/login
