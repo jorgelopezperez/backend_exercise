@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = "/restaurant/nutritionalinfo/list"
+LOGIN_REDIRECT_URL = "/restaurant/home"
 INTERNAL_IPS = ('127.0.0.1',)
 
 

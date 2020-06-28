@@ -107,3 +107,5 @@ python manage.py runserver
 ```
 
 Point your browser to URL: http://127.0.0.1:8000/login
+
+There is a superuser called admin, with password: *passwd4admin*
