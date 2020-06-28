@@ -1,3 +1,12 @@
+Table of contents
+=================
+
+   * [Description of the assigned task](#description-of-the-assigned-task)
+   * [Usage](#usage)
+      * [Installation](installation)
+
+## Description of the ssigned task   
+   
 As a matter of proof, in this web application you can see <b>CRUD</b> pages developed with Django framework
 
 ## Task
@@ -59,3 +68,5 @@ Fields:
 
   *  This can be added on the page for listing the products
   *  The user should be able to filter the products by their name, as well as their status ( ACTIVE / INACTIVE )
+  
+## Usage 
