@@ -3,11 +3,22 @@ from django.forms import formset_factory, inlineformset_factory
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView, DetailView
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect		
 from .models import NutritionalInfo, Product, NutritionalInfoValues
 from .forms import NutritionalInfoValuesForm, NutritionalInfoValuesFormFormSet, ProductForm, MyFormSimple
 
+@login_required	
+def home_page(request):
+    """
+    Función vista para la página inicio del sitio.
+    """
+    # Renderiza una simple homepage
+    return render(
+        request,
+        'restaurant/index.html'
+    )
 
 # VIEWS for Nutritional Info
 @method_decorator([login_required], name='dispatch')
@@ -91,7 +102,6 @@ def create_product(request):
 		keys_inlineforms = [el for el in request.POST.keys() if ("nutritional_info" in el or "values" in el) and request.POST[el] !=['']]
 		data_inlineforms = [request.POST[key] for key in keys_inlineforms]
 		form_set = NutritionalInfoValuesFormFormSet(request.POST)
-		import pdb; pdb.set_trace()
 		if form.is_valid() and form_set.is_valid():
 			cd = form.cleaned_data
 			ASSOCIATED_DATA = form_set.cleaned_data
@@ -99,29 +109,26 @@ def create_product(request):
 			DATA_DICT["name"] = DATA_DICT["nombre"]
 			del DATA_DICT["nombre"]
 			new_product = Product.objects.create(**DATA_DICT)
-			import pdb; pdb.set_trace()
 			for el in ASSOCIATED_DATA:
 				if el:
 					NutritionalInfoValues.objects.create(product=new_product, 
 														 nutritional_info=el["nutritional_info"],
 														 values=el["values"])
+			#messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
 			return HttpResponseRedirect(reverse('restaurant:product_list'))
 	else:
+		print("Hello")
 		form = MyFormSimple()
 		form_set = NutritionalInfoValuesFormFormSet()
-		return render(request, 'restaurant/product/create3.html', {'form': form, 'formset': form_set})
+		return render(request, 'restaurant/product/create.html', {'form': form, 'formset': form_set})
 		
-
-
 
 @login_required	
 def update_product(request, pk=None):
 	instance = get_object_or_404(Product, pk=pk)
-	print(instance)
 	data = {"nombre": instance.name, 
 			"description": instance.description, 
 			"status": instance.status}
-	#		
 	form = MyFormSimple(data)					
 	
 	data_rel = []
@@ -138,10 +145,7 @@ def update_product(request, pk=None):
 	NutritionalInfoValuesFormFormSet = formset_factory(NutritionalInfoValuesForm, extra=num_forms, max_num=num_forms)
 	for el in data_rel:
 		formset = NutritionalInfoValuesFormFormSet(el)
-		
-	data_inlineforms__ = [{"form-0-nutritional_info": "1", "form-0-values": "1111"},
-	{"form-0-nutritional_info": "6", "form-0-values": "2222"}]
-		
+	
 	DICT_HIDDEN = {'form-TOTAL_FORMS': num_forms, 
 					'form-INITIAL_FORMS': '0', 
 					'form-MIN_NUM_FORMS': '0',
@@ -163,24 +167,16 @@ def update_product(request, pk=None):
 	data_inlineforms__2 = {"nutritional_info": "1", "values": "1111"}
 	
 	form_set = NutritionalInfoValuesFormFormSet(data_inlineforms)
-	#OLD_KEYS = list(set([list(el.keys()).pop(0) for el in form_set.cleaned_data]))
 	OLD_NUTRITIONAL_INFO_LIST_DICTS = form_set.cleaned_data
 	OLD_KEYS = list(set([list(el.keys()).pop(0) for el in form_set.cleaned_data]))
 	OLD_NUTRITIONAL_INFO = [el["nutritional_info"].name for el in form_set.cleaned_data]
-	print("OLD_NUTRITIONAL_INFO")
-	print(OLD_NUTRITIONAL_INFO)
 	if request.method == 'POST':
 		form = MyFormSimple(request.POST)
 		form_set = NutritionalInfoValuesFormFormSet(request.POST)
-		#import pdb; pdb.set_trace()		
 		if form.is_valid() and form_set.is_valid():
 			cd = form.cleaned_data
 			ASSOCIATED_DATA = form_set.cleaned_data
-			print("ASSOCIATED_DATA")
-			print(ASSOCIATED_DATA)
 			NEW_ASSOCIATED_DATA_LIST = [el["nutritional_info"].name for el in ASSOCIATED_DATA]
-			print("NEW_ASSOCIATED_DATA_LIST")
-			print(NEW_ASSOCIATED_DATA_LIST)
 			TO_DELETE_partial = list(set(OLD_NUTRITIONAL_INFO) - set(NEW_ASSOCIATED_DATA_LIST))
 			TO_DELETE_BETTER  = [{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in OLD_NUTRITIONAL_INFO_LIST_DICTS if el["nutritional_info"].name in TO_DELETE_partial]
 			TO_INSERT_partial = list(set(NEW_ASSOCIATED_DATA_LIST) - set(OLD_NUTRITIONAL_INFO))
@@ -188,10 +184,6 @@ def update_product(request, pk=None):
 			TO_UPDATE_partial = list(set([el["values"] for el in ASSOCIATED_DATA]) - set([el["values"] for el in OLD_NUTRITIONAL_INFO_LIST_DICTS]))
 			TO_UPDATE = [{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in ASSOCIATED_DATA if el["values"] in TO_UPDATE_partial]
 			TO_UPDATE_BETTER = [{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in ASSOCIATED_DATA if el["values"] in TO_UPDATE_partial and el["nutritional_info"].name not in TO_INSERT_partial]
-			#import pdb; pdb.set_trace()
-			print([{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in ASSOCIATED_DATA if el["nutritional_info"].name in TO_INSERT_partial])
-			print([{"nutritional_info": el["nutritional_info"].name, "values": el["values"]} for el in OLD_NUTRITIONAL_INFO_LIST_DICTS if el["nutritional_info"].name in TO_DELETE_partial])
-			print([el for el in OLD_NUTRITIONAL_INFO_LIST_DICTS if el["nutritional_info"].name in TO_DELETE_partial])
 			DATA_DICT = { ky: request.POST.dict()[ky] for ky in ["nombre", "description", "status"]}
 			DATA_DICT["name"] = DATA_DICT["nombre"]
 			del DATA_DICT["nombre"]
@@ -204,35 +196,16 @@ def update_product(request, pk=None):
 					
 			if TO_DELETE_partial != [] and TO_INSERT_partial != []:	
 				for el in TO_DELETE_BETTER:
-					print("el-delete")
-					print(el)
-					import pdb; pdb.set_trace()
-					NutritionalInfoValues.objects.filter(product=instance,  nutritional_info__name = el["nutritional_info"]).delete
+					NutritionalInfoValues.objects.filter(product=instance,  nutritional_info__name = el["nutritional_info"]).delete()
 				for el in TO_INSERT_BETTER:
-					print("el-insert")
-					print(el)
-					#import pdb; pdb.set_trace()
 					nutritional_instance = NutritionalInfo.objects.get(name=el["nutritional_info"])
-					print(nutritional_instance)
 					NutritionalInfoValues.objects.create(product=instance,  nutritional_info = nutritional_instance,values=el["values"])
-					#instance.nutritionalinfovalues_set.create
-				
-				
-			'''
-			for el in ASSOCIATED_DATA:
-				print("el")
-				print(el)
-				if el["nutritional_info"].name in OLD_NUTRITIONAL_INFO:
-					print("UPDATING")
-					to_update_nutr_instance = NutritionalInfoValues.objects.filter(product_id = instance.pk, nutritional_info__name = el["nutritional_info"].name).get()
-					to_update_nutr_instance.values = el["values"]
-					to_update_nutr_instance.save()
-				else:
-					print("DELETING")
-					to_delete_nutr_instance = NutritionalInfoValues.objects.filter(product_id = instance.pk, nutritional_info__name = el["nutritional_info"].name).get()
-					to_delete_nutr_instance.values = el["values"]
-					to_delete_nutr_instance.save()
-			'''
+					
+			#new_values = form.save(commit=True)
+			instance.name = cd["nombre"]
+			instance.description = cd["description"]
+			instance.status = cd["status"]
+			instance.save()
 			#messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
 			return HttpResponseRedirect(reverse('restaurant:product_list'))
 

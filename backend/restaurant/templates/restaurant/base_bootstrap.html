@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static "css/base.css" %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <link href="{% static "css/base_boot.css" %}" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".mydatatable").DataTable({
+						"paging": false,
+						"ordering": false, 
+						"info": false})
+		});
+	</script>
+</head>
+
+<div id="header">
+	<span class="logo"><a href="{% url 'restaurant:restaurant_homepage'%}">Backend</a> </span>
+	<span class="items"> <a href="{% url 'restaurant:nutritional_info_list'%}">NUTRITIONAL INFO</a> </span>
+	<span class="items"> <a href="{% url 'restaurant:product_list'%}">PRODUCTS</a> </span>
+	<span class="username">Welcome {{ request.user.username }} | <a href="/logout">Log-out</a></span>
+</div>
+<body>
+  <div id="content" class="container mb-3 mt-3">
+	{% block content %}
+    {% endblock %}
+  </div>
+	{% block js_footer %}
+	{% endblock %}
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% extends "restaurant/base.html" %}
+
+{% block title %}My HomePage{% endblock %}
+
+{% block content %}
+As a matter of proof, in this web application you can see <b>CRUD</b> pages developed with Django framework
+
+<h2>Task</h2>
+You work for a restaurant chain, and your manager has asked you to create a small CMS for managing the
+information about their products.
+
+<h2>Database models</h2>
+<h3>Users</h3>
+These are the users that will be authenticating inside the CMS for managing the data.
+<h3>Nutritional information</h3>
+<p>This table will hold the nutritional values that will be used for the products.</p>
+Fields:
+<ul>
+<li>Name</li>
+<li>Unit</li>
+</ul>
+<h3>Products</h3>
+<p>This table will hold the products.</p>
+Fields:
+<ul>
+<li>Name - name of the product</li>
+<li>Description - description of the productName - name of the product</li>
+<li>Nutritional values - each product can have multiple nutritional values (e.g. Proteins (g): 100.00 )</li>
+<li>Status - Either ACTIVE or INACTIVE</li>
+</ul>
+
+<h2>Requirements</h2>
+<ul class="list-unstyled">
+    <li>Create the database models (and their related models)</li>
+        <ul>
+            <li>Users (you can use the default Django model)</li>
+            <li>Nutritional information</li>
+			<li>Products</li>
+        </ul>
+    <li>Create the login page for the users to authenticate inside the CMS</li>
+    <li>The users should not be able to manage the CMS data if they are not authenticated</li>
+	<li>Create the CRUD pages for the Nutritional Information</li>
+		<ul>
+			<li>List the nutritional informations</li>
+			<li>Create the nutritional informations</li>
+			<li>Update the nutritional informations</li>
+			<li>Delete the nutritional informations</li>
+		</ul>
+	<li>Create the CRUD pages for the Products</li>
+	<ul>
+		<li>List the products</li>
+		<ul>
+			<li>Inside the list you should display the name of the product, as well as the
+nutritional values of that product</li>
+		</ul>
+		<li>Create the products</li>
+		<li>Update the products</li>
+		<li>Delete the products</li>
+	</ul>
+	<li>Allow the user to filter the products</li>
+	<ul>
+		<li>This can be added on the page for listing the products</li>
+		<li>The user should be able to filter the products by their name, as well as their status
+( ACTIVE / INACTIVE )</li>
+	</ul>
+</ul>
+
+{% endblock %}

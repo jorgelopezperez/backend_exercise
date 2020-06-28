@@ -1,0 +1,13 @@
+#create-button{
+	margin-bottom: 15px;
+	float: right !important
+}
+
+input[type=submit] {
+    font-weight:bold;
+    background:#0069d9;
+    color:#fff;
+    padding:10px 20px;
+    font-size:14px;
+    text-transform:uppercase; 
+}

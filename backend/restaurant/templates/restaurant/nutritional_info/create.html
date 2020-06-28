@@ -1,10 +1,11 @@
-{% extends "restaurant/base.html" %}
+{% extends "restaurant/base_bootstrap.html" %}
 
 {% block title %}My NutritionalInfo list{% endblock %}
 
 {% block content %}
-<form method="post">{% csrf_token %}
+<!--<form method="post" class="form-inline">-->
+<form method="post" style="border:thin solid #dee2e6; margin: 20px; padding:20px">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <input class="btn btn-primary" type="submit" value="Save">
 </form>
 {% endblock %}

@@ -71,25 +71,38 @@ Fields:
   
 ## Usage 
 
+This web application is relying on python packages and javascript libraries
+
+Python packages:
+
+*  Django 3.0.7
+*  Django Debug Toolbar 2.2
+
+Javascript libraries:
+
+*  Bootstrap
+*  DataTables
+*  Jquery
+ 
 Follow these steps to run this application
 
 ### Installation
 
-Download the source code from this git repo
+Download the source code from this git repo. 
 
-Install the package dependencias by running this command:
+A db.sqlite3 database file contains the data used in this application
+
+Install the package dependencies by running this command:
 
 ```
 pip install -r requirements.txt
 ```
 
-Python packages:
 
-Javascript libraries:
-
-Run you application by cd to the project directory and running this command
+Run you application by cd to the project directory and running these commands
 
 ```
+python manage.py migrate
 python manage.py runserver  
 ```
 

@@ -1,4 +1,4 @@
-{% extends "restaurant/base.html" %}
+{% extends "restaurant/base_bootstrap.html" %}
 
 {% block title %}My NutritionalInfo list{% endblock %}
 
@@ -6,7 +6,7 @@
 
 <form method="post">{% csrf_token %}
     {{ form.as_table }}
-    <input type="submit" value="Update">
+	<input class="btn btn-primary" type="submit" value="Update">
 </form>
 
 {% endblock %}

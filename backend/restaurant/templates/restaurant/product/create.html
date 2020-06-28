@@ -1,14 +1,17 @@
-{% extends "restaurant/base.html" %}
+{% extends "restaurant/base_bootstrap.html" %}
 
 {% block title %}My NutritionalInfo list {% endblock %}
 
 {% block content %}
-<form method="post">{% csrf_token %}
-	<div class="wrap_out">
+<form method="post" style="border:thin solid #dee2e6; margin: 20px; padding:20px">{% csrf_token %}
+	<div class="form-group">
     {{ form.as_p }}
-	{{formset.as_p}}
-	{{formset.management_form}}	
 	</div>
-    <input type="submit" value="Save">
+	<hr/>
+	<div class="form-group">
+	{{ formset.management_form }}	
+	{{ formset.as_p }}
+	</div>
+	<input class="btn btn-primary" type="submit" value="Save">
 </form>
 {% endblock %}

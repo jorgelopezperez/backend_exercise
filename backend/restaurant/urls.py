@@ -4,6 +4,7 @@ from . import views
 app_name = 'restaurant'
 
 urlpatterns = [
+	path('home', views.home_page, name='restaurant_homepage'),
 	path('nutritionalinfo/list', views.NutritionalInfoListView.as_view(), name='nutritional_info_list'),
 	path('nutritionalinfo/create', views.NutritionalInfoCreateView.as_view(), name='nutritional_info_create'),
 	#path('nutritionalinfo/detail/<int:pk>', views.NutritionalInfoDetailView.as_view(), name='nutritional_info_detail'),
