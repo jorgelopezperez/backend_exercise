@@ -65,7 +65,7 @@ poyo==0.5.0
 pre-commit==2.5.1
 prompt-toolkit==3.0.5
 psycopg2-binary==2.8.5
-py==1.8.2
+py==1.10.0
 pycodestyle==2.6.0
 pycparser==2.20
 pyflakes==2.2.0
